@@ -1,0 +1,43 @@
+{
+    "name": "A",
+    "children": 
+    [
+           { "name": "B",
+             "children": 
+             [
+                   {"name": "C",
+                   "children": 
+                   [
+                           {"name": "D",
+                            "children":
+                        [
+                                {"name": "E", "size": 73},
+                                {"name": "E", "size": 39},
+                                {"name": "E", "size": 67},
+                                {"name": "E", "size": 73},
+                                {"name": "E", "size": 73}
+                        ]},
+                         {"name": "D", "size": 73},
+                         {"name": "D", "size": 39},
+                         {"name": "D", "size": 67},
+                         {"name": "D", "size": 73},
+                         {"name": "D", "size": 39},
+                         {"name": "D", "size": 73}
+                   ]},
+                 {"name": "C", "size": 67},
+                 {"name": "C", "size": 73},
+                 {"name": "C", "size": 39},
+                 {"name": "C", "size": 67},
+                 {"name": "C", "size": 73},
+                 {"name": "C", "size": 73}
+           ]
+         },
+         {"name": "B", "size": 39},
+         {"name": "B", "size": 67},
+         {"name": "B", "size": 73},
+         {"name": "B", "size": 39},
+         {"name": "B", "size": 67},
+         {"name": "B", "size": 73}
+    ]
+   }
+   

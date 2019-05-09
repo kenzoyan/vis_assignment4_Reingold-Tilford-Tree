@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <meta charset="utf-8">
+        <title>Reingold–Tilford Tree.html</title>
+        <script type="text/javascript" src="d3.v3.js"></script>
+    <style>
+ 
+        .node circle {
+            fill: #fff;
+            stroke: mediumvioletred;
+            stroke-width: 1.5px;
+        }
+
+        .node {
+            font: 16px sans-serif;
+        }
+
+        .link {
+            fill: none;
+            stroke: orangered;
+            stroke-width: 1.5px;
+        }
+ 
+</style>
+</head>
+<body>
+<script type="text/javascript">
+
+var diameter = 1200;//直径
+var height=1000;
+            //树指定径向布局大小和节点邻距
+var tree = d3.layout.tree()
+    .size([360,  360])// 角度360度，半径360px
+    .separation(function(a, b) { 
+    	return (a.parent == b.parent ? 1 : 2) / a.depth;// 父节点相同的节点邻距相等，不同的稍宽一点用来区分开
+    });
+ 
+var diagonal = d3.svg.diagonal.radial()//(2)指定为径向布局
+    .projection(function(d) { 
+    	return [d.y, d.x / 180 * Math.PI];// 半径d.y和角度d.x / 180 * Math.PI（转换成弧度制） 
+    });
+ 
+var svg = d3.select("body").append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+  	.append("g")
+    .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+//读取json文件
+var root=d3.json("bigdata.json",function(error,data2)
+{
+    console.log(error, data2)
+    var nodes = tree.nodes(data2),//返回值是一个数组，每个节点上填充一些计算后的属性，例如深度，坐标等。
+        links = tree.links(nodes);//返回节点数组的连接数组
+    //(4)为链接添加路径
+    var link = svg.selectAll("path.link")
+        .data(links)
+        .enter().append("path")
+        .attr("class", "link")
+        .attr("d", diagonal);
+    //(5)节点转换位置
+    var node = svg.selectAll("g.node")
+        .data(nodes)
+        .enter().append("g")
+        .attr("class", "node")
+        .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+    //(6)节点添加圆圈
+    node.append("circle")
+        .attr("r", 4.5);
+
+    //(7)节点添加文字
+    node.append("text")
+        .attr("dy", ".31em")
+        .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })//小于180度的文字放在前面，否则放在后面
+        .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+        .text(function(d) { return d.name; });
+
+    d3.select(self.frameElement).style("height", height + "px");
+});
+
+        </script>
+    </body>
+</html>
